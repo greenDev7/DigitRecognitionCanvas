@@ -2,7 +2,7 @@
   <div id="container">
     <DigitPainterComponent
       :imageSizeLength="28"
-      :squareSizeLength="10"
+      :squareSizeLength="12"
       :gripLineThickness="0.2"
     />
   </div>
