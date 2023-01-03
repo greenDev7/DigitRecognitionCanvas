@@ -12,26 +12,20 @@
                 <tr>
                   <td class="font">Толщина линии:</td>
                   <td>
-                    <span style="margin-right: 10px">
+                    <span
+                      v-for="(item, index) in lineToDrawThicknessList"
+                      :key="index"
+                      style="margin-right: 10px"
+                    >
                       <input
                         type="radio"
                         name="thickness"
-                        id="rb1"
-                        value="1"
+                        :id="rb + item"
+                        :value="item"
                         v-model="lineToDrawThickness"
                       />
-                      <label for="rb1">1</label>
+                      <label :for="rb + item">{{ item }}</label>
                     </span>
-                    <span
-                      ><input
-                        type="radio"
-                        name="thickness"
-                        id="rb2"
-                        value="2"
-                        v-model="lineToDrawThickness"
-                      />
-                      <label for="rb2">2</label></span
-                    >
                   </td>
                 </tr>
               </table>
@@ -107,6 +101,7 @@ export default {
     return {
       commonWidthAndHeight,
       canDraw,
+      lineToDrawThicknessList: [1, 2, 3, 4],
       lineToDrawThickness: 2,
       predictedDigit: "",
       matchList: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
