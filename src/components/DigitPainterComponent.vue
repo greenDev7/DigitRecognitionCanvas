@@ -20,11 +20,11 @@
                       <input
                         type="radio"
                         name="thickness"
-                        :id="rb + item"
+                        :id="'rb' + item.toString()"
                         :value="item"
                         v-model="lineToDrawThickness"
                       />
-                      <label :for="rb + item">{{ item }}</label>
+                      <label :for="'rb' + item.toString()">{{ item }}</label>
                     </span>
                   </td>
                 </tr>
@@ -85,6 +85,8 @@ import digitCanvas from "../assets/digitCanvas.png";
 import Network from "../model/Network";
 import hiddenWeights from "../model/hiddenWeights.json";
 import outputWeights from "../model/outputWeights.json";
+import hiddenWeightsXOR from "../model/xorProblemHiddenWeights.json";
+import outputWeightsXOR from "../model/xorProblemOutputWeights.json";
 export default {
   name: "DigitPainter",
 
@@ -98,6 +100,7 @@ export default {
     let commonWidthAndHeight = this.imageSizeLength * this.squareSizeLength;
     let canDraw = false;
     let network = new Network(hiddenWeights, outputWeights);
+    let networkXOR = new Network(hiddenWeightsXOR, outputWeightsXOR);
     return {
       commonWidthAndHeight,
       canDraw,
@@ -106,6 +109,7 @@ export default {
       predictedDigit: "",
       matchList: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       network,
+      networkXOR,
     };
   },
 
@@ -266,6 +270,7 @@ export default {
 
       // Получаем ответ от нейросети
       let outputSignal = this.network.makePropagateForward(functionSignal);
+      //console.log("outputSignal:", outputSignal);
       // Находим распознанную цифру (индекс максимального элемента в outputSignal)
       this.predictedDigit = outputSignal
         .indexOf(Math.max(...outputSignal))
@@ -277,6 +282,14 @@ export default {
       this.matchList = outputSignal.map(
         (x) => (x = Math.round((x + Number.EPSILON) * 1000) / 1000)
       );
+    },
+
+    recogniseXOR() {
+      // Получаем ответ от нейросети
+      console.log("[0, 0] = ", this.networkXOR.makePropagateForward([0, 0]));
+      console.log("[1, 1] = ", this.networkXOR.makePropagateForward([1, 1]));
+      console.log("[0, 1] = ", this.networkXOR.makePropagateForward([0, 1]));
+      console.log("[1, 0] = ", this.networkXOR.makePropagateForward([1, 0]));
     },
   },
 
