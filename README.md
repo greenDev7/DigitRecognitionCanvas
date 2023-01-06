@@ -4,6 +4,8 @@
 
 [С# neural network learning algorithm](https://github.com/greenDev7/NeuralNetwork)
 
+[Algorithm description (Habr)](https://habr.com/ru/post/708928/)
+
 ## Project setup
 
 ```
